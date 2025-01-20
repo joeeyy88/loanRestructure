@@ -32,17 +32,17 @@ public class TriggerRoutine extends ActivityLifecycle {
             AaArrangementActivityRecord masterActivityRecord, 
             TStructure productPropertyRecord, AaProductCatalogRecord productRecord,
             TStructure record, List<TransactionData> transactionData, List<TStructure> transactionRecord) {
-        DataAccess dataAccess = new DataAccess(this);
-        System.out.println("--Executed--");
-        String aact =      arrangementContext.getArrangementActivityId().toString();
-        System.out.println("Acct Id:" + aact);
-        AaArrangementActivityRecord arrx = new AaArrangementActivityRecord(dataAccess.getRecord("AA.ARRANGEMENT.ACTIVITY", aact));
-        
-        
-        System.out.println("Acct Record: " + arrx);
+       
         
         if (arrangementContext.getActivityStatus().equalsIgnoreCase("AUTH")) {
-      
+            DataAccess dataAccess = new DataAccess(this);
+            System.out.println("--Executed--");
+            String aact =      arrangementContext.getArrangementActivityId().toString();
+            System.out.println("Acct Id:" + aact);
+            AaArrangementActivityRecord arrx = new AaArrangementActivityRecord(dataAccess.getRecord("AA.ARRANGEMENT.ACTIVITY", aact));
+            
+            
+            System.out.println("Acct Record: " + arrx);
      String flag =  arrx.getLocalRefField("L.RESTRUCT.FLAG").getValue().toString();
      System.out.println("Flag Status: " + flag);
        if(flag.equalsIgnoreCase("YES") )
