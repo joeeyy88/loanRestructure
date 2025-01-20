@@ -1,4 +1,12 @@
 package com.temenos.tdf.loanRestructure;
+
+// Imports (unchanged)
+
+
+
+
+
+
 import com.temenos.t24.api.system.DataAccess;
 
 import java.math.BigDecimal;
@@ -24,22 +32,15 @@ import com.temenos.t24.api.records.aasimulationcapture.AaSimulationCaptureRecord
 import com.temenos.t24.api.records.aasimulationrunner.AaSimulationRunnerRecord;
 import com.temenos.t24.api.tables.ebtdfpayoffbills.EbTdfPayoffBillsRecord;
 import com.temenos.t24.api.tables.ebtdfpayoffbills.EbTdfPayoffBillsTable;
-//import com.temenos.t24.api.tables.ebtdfpayoffbills.LOldLoanArrClass;
-//import com.temenos.t24.api.tables.ebtdfpayoffbillref.EbTdfPayoffBillRefRecord;
-//import com.temenos.t24.api.tables.ebtdfpayoffbillref.EbTdfPayoffBillRefRecord;
+import com.temenos.t24.api.tables.ebtdfpayoffbills.LOldLoanArrClass;
+import com.temenos.t24.api.tables.ebtdfpayoffbillref.EbTdfPayoffBillRefRecord;
+import com.temenos.t24.api.tables.ebtdfpayoffbillref.EbTdfPayoffBillRefRecord;
 import com.temenos.t24.api.tables.ebtdfpayoffbillref.EbTdfPayoffBillRefTable;
 import com.temenos.t24.api.tables.ebtdfpayoffbillref.BillRefClass;
-import com.temenos.t24.api.tables.ebtdfpayoffbillsref.EbTdfPayoffBillsRefRecord;
-import com.temenos.t24.api.tables.ebtdfpayoffbillsref.EbTdfPayoffBillsRefTable;
-import com.temenos.t24.api.tables.ebtdfpayoffbillsref.LOldLoanArrClass;
-
-
-
-
 // Class Definition
 public class postBillDetails extends ActivityLifecycle {
 
-    @Override 
+    @Override
     public void postCoreTableUpdate(AaAccountDetailsRecord accountDetailRecord,
             AaArrangementActivityRecord arrangementActivityRecord, ArrangementContext arrangementContext,
             AaArrangementRecord arrangementRecord, AaArrangementActivityRecord masterActivityRecord,
@@ -115,14 +116,14 @@ public class postBillDetails extends ActivityLifecycle {
                         }
                     }
 
-                    EbTdfPayoffBillsRefTable billTable = new EbTdfPayoffBillsRefTable(this);
-                    EbTdfPayoffBillsRefRecord billRecordx = null;
+                    EbTdfPayoffBillsTable billTable = new EbTdfPayoffBillsTable(this);
+                    EbTdfPayoffBillsRecord billRecordx = null;
 
                     try {
-                        billRecordx = new EbTdfPayoffBillsRefRecord(dataAccess.getRecord("EB.TDF.PAYOFF.BILLS.REF", customerId));
+                        billRecordx = new EbTdfPayoffBillsRecord(dataAccess.getRecord("EB.TDF.PAYOFF.BILLS", customerId));
                         System.out.println("Opened existing EB.TDF.PAYOFF.BILLS record for Customer ID: " + customerId);
                     } catch (Exception e) {
-                        billRecordx = new EbTdfPayoffBillsRefRecord(this);
+                        billRecordx = new EbTdfPayoffBillsRecord(this);
                         System.out.println("Created new EB.TDF.PAYOFF.BILLS record for Customer ID: " + customerId);
                     }
 
@@ -139,7 +140,6 @@ public class postBillDetails extends ActivityLifecycle {
                                 System.out.println("Checking record with LOldLoanArr: " + recordx.getLOldLoanArr().getValue());
                                 if (recordx.getLOldLoanArr().getValue().equals(oldAaId)) {
                                     // Update existing record
-                                    recordx.setLBillRef(billId.toString());
                                     recordx.setLAccountAmt(accountAmount.toString());
                                     recordx.setLProfitAmt(deferProfitAmount.toString());
                                     recordx.setLPenaltyAmt(penaltyAmount.toString());
@@ -150,12 +150,12 @@ public class postBillDetails extends ActivityLifecycle {
                             }
                         }
 //test
+                        //again
                         if (!found) {
                             // Add new record
                             System.out.println("Adding new record for arrangementID: " + oldAaId);
                             LOldLoanArrClass lOldrec = new LOldLoanArrClass();
                             lOldrec.setLOldLoanArr(aaidx.toString());
-                            lOldrec.setLBillRef(billId.toString());
                             lOldrec.setLAccountAmt(accountAmount.toString());
                             lOldrec.setLProfitAmt(deferProfitAmount.toString());
                             lOldrec.setLPenaltyAmt(penaltyAmount.toString());
