@@ -22,13 +22,19 @@ import com.temenos.t24.api.records.aaprddestermamount.AaPrdDesTermAmountRecord;
 import com.temenos.t24.api.records.aaproductcatalog.AaProductCatalogRecord;
 import com.temenos.t24.api.records.aasimulationcapture.AaSimulationCaptureRecord;
 import com.temenos.t24.api.records.aasimulationrunner.AaSimulationRunnerRecord;
-import com.temenos.t24.api.tables.ebtdfpayoffbills.EbTdfPayoffBillsRecord;
-import com.temenos.t24.api.tables.ebtdfpayoffbills.EbTdfPayoffBillsTable;
-import com.temenos.t24.api.tables.ebtdfpayoffbills.LOldLoanArrClass;
+//import com.temenos.t24.api.tables.ebtdfpayoffbills.EbTdfPayoffBillsRecord;
+//import com.temenos.t24.api.tables.ebtdfpayoffbills.EbTdfPayoffBillsTable;
+//import com.temenos.t24.api.tables.ebtdfpayoffbills.LOldLoanArrClass;
 import com.temenos.t24.api.tables.ebtdfpayoffbillref.EbTdfPayoffBillRefRecord;
 import com.temenos.t24.api.tables.ebtdfpayoffbillref.EbTdfPayoffBillRefRecord;
 import com.temenos.t24.api.tables.ebtdfpayoffbillref.EbTdfPayoffBillRefTable;
 import com.temenos.t24.api.tables.ebtdfpayoffbillref.BillRefClass;
+import com.temenos.t24.api.tables.ebtdfpayoffbillsref.EbTdfPayoffBillsRefTable;
+import com.temenos.t24.api.tables.ebtdfpayoffbillsref.EbTdfPayoffBillsRefRecord;
+import com.temenos.t24.api.tables.ebtdfpayoffbillsref.LOldLoanArrClass;
+
+
+
 // Class Definition
 //before new table
 public class postBillDetails extends ActivityLifecycle {
@@ -109,14 +115,14 @@ public class postBillDetails extends ActivityLifecycle {
                         }
                     }
 
-                    EbTdfPayoffBillsTable billTable = new EbTdfPayoffBillsTable(this);
-                    EbTdfPayoffBillsRecord billRecordx = null;
+                    EbTdfPayoffBillsRefTable billTable = new EbTdfPayoffBillsRefTable(this);
+                    EbTdfPayoffBillsRefRecord billRecordx = null;
 
                     try {
-                        billRecordx = new EbTdfPayoffBillsRecord(dataAccess.getRecord("EB.TDF.PAYOFF.BILLS", customerId));
+                        billRecordx = new EbTdfPayoffBillsRefRecord(dataAccess.getRecord("EB.TDF.PAYOFF.BILLS", customerId));
                         System.out.println("Opened existing EB.TDF.PAYOFF.BILLS record for Customer ID: " + customerId);
                     } catch (Exception e) {
-                        billRecordx = new EbTdfPayoffBillsRecord(this);
+                        billRecordx = new EbTdfPayoffBillsRefRecord(this);
                         System.out.println("Created new EB.TDF.PAYOFF.BILLS record for Customer ID: " + customerId);
                     }
 
@@ -136,6 +142,7 @@ public class postBillDetails extends ActivityLifecycle {
                                     recordx.setLAccountAmt(accountAmount.toString());
                                     recordx.setLProfitAmt(deferProfitAmount.toString());
                                     recordx.setLPenaltyAmt(penaltyAmount.toString());
+                                    recordx.setLBillRef(billId.toString());
                                     found = true;
                                     System.out.println("Updated existing record for arrangementID: " + oldAaId);
                                     break;
@@ -149,6 +156,7 @@ public class postBillDetails extends ActivityLifecycle {
                             System.out.println("Adding new record for arrangementID: " + oldAaId);
                             LOldLoanArrClass lOldrec = new LOldLoanArrClass();
                             lOldrec.setLOldLoanArr(aaidx.toString());
+                            lOldrec.setLBillRef(billId.toString());
                             lOldrec.setLAccountAmt(accountAmount.toString());
                             lOldrec.setLProfitAmt(deferProfitAmount.toString());
                             lOldrec.setLPenaltyAmt(penaltyAmount.toString());
