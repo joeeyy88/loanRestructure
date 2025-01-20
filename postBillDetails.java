@@ -1,12 +1,4 @@
 package com.temenos.tdf.loanRestructure;
-
-// Imports (unchanged)
-
-
-
-
-
-
 import com.temenos.t24.api.system.DataAccess;
 
 import java.math.BigDecimal;
@@ -38,6 +30,7 @@ import com.temenos.t24.api.tables.ebtdfpayoffbillref.EbTdfPayoffBillRefRecord;
 import com.temenos.t24.api.tables.ebtdfpayoffbillref.EbTdfPayoffBillRefTable;
 import com.temenos.t24.api.tables.ebtdfpayoffbillref.BillRefClass;
 // Class Definition
+//before new table
 public class postBillDetails extends ActivityLifecycle {
 
     @Override
