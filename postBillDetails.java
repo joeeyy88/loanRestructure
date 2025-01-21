@@ -179,7 +179,7 @@ public class postBillDetails extends ActivityLifecycle {
         } else {
             System.out.println("Activity status is not AUTH. Skipping execution.");
         }
- 
+  
         // Debug: End of method
         System.out.println("Exiting postCoreTableUpdate method.");
     }
