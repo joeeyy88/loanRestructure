@@ -33,7 +33,7 @@ import com.temenos.t24.api.tables.ebtdfpayoffbillsref.EbTdfPayoffBillsRefTable;
 import com.temenos.t24.api.tables.ebtdfpayoffbillsref.EbTdfPayoffBillsRefRecord;
 import com.temenos.t24.api.tables.ebtdfpayoffbillsref.LOldLoanArrClass;
 
-
+ 
 
 // Class Definition
 //before new table
